@@ -18,12 +18,8 @@
     margin-right: 5px;
 }
 
-#savedtabs {
-    margin: 15px 5px 5px 15px;
-}
-
-#labelname {
-    display: inline-block;
+#state {
+    padding-bottom: 10px;
 }
 
 .sidebtn {

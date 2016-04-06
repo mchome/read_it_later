@@ -32,7 +32,7 @@ function loadJson(keys) {
                 setFavimgSaved(name, favimg, url, uuid);
             })
             $('#delpages' + uuid).on("click", function() { delTabs(name); });
-            $('#loadpages' + uuid).on("click", function() { delTabs(name); });
+            $('#loadpages' + uuid).on("click", function() { openTabs(result); });
         })
     })
 }
@@ -55,6 +55,11 @@ function cleanTabs() {
     })
 }
 
+function openTabs(obj) {
+    $.each(obj, function(urls) {
+        chrome.tabs.create({url: urls});
+    })
+}
 
 $('#savebtn').click(function() {
     chrome.tabs.query({}, function(tabs) {
