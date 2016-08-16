@@ -2,12 +2,12 @@
     "manifest_version": 2,
 
     "name": "read_it_later",
-    "version": "1.0",
+    "version": "2.0",
     "description": "Save the all tabs for next browsing.",
 
     "browser_action": {
-        "default_popup" : "static/html/index.html",
-        "default_title" : "Read it later"
+        "default_popup": "static/html/index.html",
+        "default_title": "Read it later"
     },
-    "permissions" : ["tabs", "storage", "chrome://favicon/"]
+    "permissions": ["tabs", "storage", "chrome://favicon/"]
 }
