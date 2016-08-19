@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/libs/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
-<body>
-    <div class="container">
-        <div class="row" id="state">
-            <div class="col-md-12">
-                <div id="saveit">
-                    <input id="name" type="text" class="form-control input-sm" placeholder=""></input>
-                    <button id="savebtn" type="button" data-icon="&#xe902" class="btn btn-success" title="">    Save It !</button>
-                </div>
-                <div id="favimg"></div>
+
+<body style="width:300px">
+    <div id="app">
+        <div class="state">
+            <div id="toolbar">
+                <input id="listname" v-model="listname" placeholder="{{ listname }}">
+                <button id="savebtn" title="You have opened {{ currenttabs.length }} tabs." @click="saveTabs">Save it!</button>
+            </div>
+            <div id="currenttabs">
+                <img id="favimg" v-for="tab in currenttabs" title="{{ tab.title }}" v-bind:src="tab.favimg" @click="openTab(tab.url)">
             </div>
         </div>
-
-        <div class="row" id="list"></div>
+        <div class="list">
+            <div v-for="list in savedlist">
+                <span>{{ list.listname }}</span>
+                <button v-on:click="removeTabs($index)">X</button>
+                <div class="favimg">
+                    <template v-for="tab in list.tabs">
+                        <img id="favimg" title="{{ tab.title }}" v-bind:src="tab.favimg" @click="openTab(tab.url)">
+                    </template>
+                </div>
+            </div>
+        </div>
     </div>
-    <script src="/static/libs/jquery/jquery.min.js"></script>
-    <script src="/static/libs/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/app/app.js"></script>
-    <script src="/app/tabsave.js"></script>
+
+    <script type="text/javascript" src="/static/libs/vue/vue.min.js"></script>
+    <script type="text/javascript" src="/app/app.js"></script>
 </body>
+
 </html>
