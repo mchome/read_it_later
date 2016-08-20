@@ -1,6 +1,7 @@
 var store = new Vue({
     el: '#app',
     data: {
+        defaultlistname: '',
         listname: '',
         currenttabs: [],
         savedlist: []
@@ -9,7 +10,11 @@ var store = new Vue({
         loadCurrenttabs: function() {
             chrome.tabs.query({}, function(tabs) {
                 for (let tab of tabs) {
-                    store.$data.currenttabs.push({ 'title': tab.title, 'url': tab.url, 'favimg': tab.favIconUrl, 'index': tab.index });
+                    if (tab.favIconUrl === '' || tab.favIconUrl === 'chrome://theme/IDR_EXTENSIONS_FAVICON@2x' || !tab.favIconUrl) {
+                        store.$data.currenttabs.push({ 'title': tab.title, 'url': tab.url, 'favimg': '/static/images/website.png', 'index': tab.index });
+                    } else {
+                        store.$data.currenttabs.push({ 'title': tab.title, 'url': tab.url, 'favimg': tab.favIconUrl, 'index': tab.index });
+                    }
                 }
             });
         },
@@ -24,12 +29,13 @@ var store = new Vue({
             });
         },
         saveTabs: function() {
-            if (this.listname !== '') {
-                let item = {};
-                item[this.listname] = JSON.stringify(this.currenttabs);
-                chrome.storage.local.set(item);
-                this.savedlist.push({ listname: this.listname, tabs: this.currenttabs });
+            if (this.listname === '') {
+                this.listname = this.defaultlistname;
             }
+            let item = {};
+            item[this.listname] = JSON.stringify(this.currenttabs);
+            chrome.storage.local.set(item);
+            this.savedlist.push({ listname: this.listname, tabs: this.currenttabs });
         },
         removeTabs: function(index) {
             chrome.storage.local.remove(this.savedlist[index].listname);
@@ -38,10 +44,15 @@ var store = new Vue({
         openTab: function(url) {
             chrome.tabs.create({ url: url });
         },
+        openMultitab: function(tabs) {
+            for (let tab of tabs) {
+                chrome.tabs.create({ url: tab.url });
+            }
+        },
         defaultListname: function() {
             let currentdate = new Date();
             let datetime = currentdate.getFullYear() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getDate() + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-            this.listname = datetime;
+            this.defaultlistname = datetime;
         }
     },
     ready: function() {
@@ -54,7 +65,7 @@ var store = new Vue({
 // chrome extension storage:
 // key: listname
 // value: serialized tabs
-
+//
 // savedlist:
 // {
 //     listname: listname,

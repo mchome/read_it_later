@@ -10,5 +10,8 @@
         "default_title": "Read it later",
         "default_icon": "static/images/favicon.png"
     },
+    "background": {
+        "page": "static/html/background.html"
+    },
     "permissions": ["tabs", "storage", "chrome://favicon/"]
 }

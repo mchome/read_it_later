@@ -3,34 +3,39 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/libs/mui/mui.min.css">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 
-<body style="width:300px">
+<body style="width:270px">
     <div id="app">
         <div class="state">
-            <div id="toolbar">
-                <input id="listname" v-model="listname" placeholder="{{ listname }}">
-                <button id="savebtn" title="You have opened {{ currenttabs.length }} tabs." @click="saveTabs">Save it!</button>
+            <div id="toolbar" class="mui-panel mui-textfield">
+                <input id="listname" v-model="listname" placeholder="{{ defaultlistname }}">
+                <button id="savebtn" class="mui-btn mui-btn--fab mui-btn--primary" data-icon="&#xe902" title="You have opened {{ currenttabs.length }} tabs." @click="saveTabs"></button>
             </div>
             <div id="currenttabs">
                 <img id="favimg" v-for="tab in currenttabs" title="{{ tab.title }}" v-bind:src="tab.favimg" @click="openTab(tab.url)">
             </div>
         </div>
         <div class="list">
-            <div v-for="list in savedlist">
-                <span>{{ list.listname }}</span>
-                <button v-on:click="removeTabs($index)">X</button>
+            <div class="list-pane mui-panel" v-for="list in savedlist">
+                <div class="listtitle">
+                    <span data-icon="&#xe903">{{ list.listname }}</span>
+                    <div>
+                        <button class="inlist-btn mui-btn mui-btn--fab" data-icon="&#xe901" v-on:click="openMultitab(list.tabs)"></button>
+                        <button class="inlist-btn mui-btn mui-btn--fab mui-btn--danger" data-icon="&#x1f309" v-on:click="removeTabs($index)"></button>
+                    </div>
+                </div>
                 <div class="favimg">
-                    <template v-for="tab in list.tabs">
-                        <img id="favimg" title="{{ tab.title }}" v-bind:src="tab.favimg" @click="openTab(tab.url)">
-                    </template>
+                    <img id="favimg" v-for="tab in list.tabs" title="{{ tab.title }}" v-bind:src="tab.favimg" @click="openTab(tab.url)">
                 </div>
             </div>
         </div>
     </div>
 
     <script type="text/javascript" src="/static/libs/vue/vue.min.js"></script>
+    <script type="text/javascript" src="/static/libs/mui/mui.min.js"></script>
     <script type="text/javascript" src="/app/app.js"></script>
 </body>
 
