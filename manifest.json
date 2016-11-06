@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "read_it_later",
-    "version": "2.0",
+    "version": "2.1",
     "description": "Save the all tabs for next browsing.",
 
     "browser_action": {

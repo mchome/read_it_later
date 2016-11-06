@@ -7,3 +7,5 @@ Save the all tabs for next browsing.
 
 保存当前chrome所有tab，并不支持多窗口（因为我只开一个窗口），使用vue+mui。
 (popup弹出延迟暂不明原因。。。)
+
+已上传至chrome webstore: [read it later](https://chrome.google.com/webstore/detail/readitlater/hplljigdnfpiibakinjiiccafbjehbba 'fuyumi')
